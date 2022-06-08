@@ -18,3 +18,4 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 Route.get("/products","ProductController.index")
+Route.post("/best_seller","ProductController.best_seller")
