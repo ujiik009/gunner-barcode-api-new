@@ -10,6 +10,8 @@ class PromotionsSchema extends Schema {
       table.string("name",64)
       table.text("detail")
       table.text("images")
+      table.float("price")
+      table.float("discount")
       table.boolean("is_active").defaultTo(true)
       table.timestamps()
     })
