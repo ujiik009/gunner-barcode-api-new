@@ -17,10 +17,10 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
+  async index({ params: { page, limit }, response, view }) {
     response.json({
       status: true,
-      data: await Product.query().fetch()
+      data: await Product.query().paginate(page, limit)
     })
   }
 

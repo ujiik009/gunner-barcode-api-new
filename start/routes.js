@@ -17,7 +17,7 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
-Route.get("/products","ProductController.index")
+Route.get("/products/:page/:limit","ProductController.index")
 Route.get("/products/:id","ProductController.show")
 Route.post("/best_seller","ProductController.best_seller")
 Route.get("/promotions","PromotionController.index")
