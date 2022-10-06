@@ -109,6 +109,17 @@ class ProductController {
         .fetch()
     })
   }
+
+  async categories({ request, response }) {
+    response.json({
+      status: true,
+      data: await Product.query()
+        .select("brand")
+        .groupBy("brand")
+        .count("brand as counting")
+        
+    })
+  }
 }
 
 module.exports = ProductController
