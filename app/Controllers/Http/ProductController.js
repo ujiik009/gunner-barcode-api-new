@@ -25,6 +25,23 @@ class ProductController {
   }
 
   /**
+  * Show a list of all products filter by brand.
+  * post products
+  *
+  * @param {object} ctx
+  * @param {Request} ctx.request
+  * @param {Response} ctx.response
+  * @param {View} ctx.view
+  */
+  async get_product_by_brand({ request, response }) {
+    const { brand } = request.only(["brand"])
+    response.json({
+      status: true,
+      data: await Product.query().where("brand", "=", brand).fetch()
+    })
+  }
+
+  /**
    * Render a form to be used for creating a new product.
    * GET products/create
    *
@@ -117,7 +134,7 @@ class ProductController {
         .select("brand")
         .groupBy("brand")
         .count("brand as counting")
-        
+
     })
   }
 }

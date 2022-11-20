@@ -1,0 +1,17 @@
+@base_url = http://127.0.0.1:3333
+
+###
+# submit sticker design
+POST {{base_url}}/submit_sticker
+content-type: application/json
+
+{
+    "color": "sample",
+    "qty": "Wed, 21 Oct 2015 18:27:50 GMT",
+    "sticker_size":"sticker_size",
+    "sticker_texture":"sticker_texture",
+    "sticker_type":"sticker_type",
+    "sticker_url":"sticker_url"
+}
+
+
