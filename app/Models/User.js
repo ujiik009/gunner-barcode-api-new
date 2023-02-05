@@ -5,7 +5,7 @@ const Hash = use('Hash')
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
-
+const uuid = use("uuid")
 class User extends Model {
   static boot () {
     super.boot()
@@ -18,6 +18,9 @@ class User extends Model {
       if (userInstance.dirty.password) {
         userInstance.password = await Hash.make(userInstance.password)
       }
+
+      userInstance.id = uuid.v4()
+      
     })
   }
 

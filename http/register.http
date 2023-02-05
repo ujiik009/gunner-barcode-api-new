@@ -1,0 +1,15 @@
+@base_url = http://127.0.0.1:3333
+
+###
+# Register
+POST {{base_url}}/register
+content-type: application/json
+
+{
+    "username": "apirat",
+    "fullname": "apirat noiaroon",
+    "email":"apirat14121ice@hotmail.com",
+    "password":"123456789"
+}
+
+
