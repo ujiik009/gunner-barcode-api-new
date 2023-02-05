@@ -20,6 +20,7 @@ Route.on('/').render('welcome')
 
 // Auth
 Route.post("/register", "AuthController.register")
+Route.post("/login", "AuthController.login")
 
 Route.get("/products/:page/:limit", "ProductController.index")
 Route.get("/products/:id", "ProductController.show")

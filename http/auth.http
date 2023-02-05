@@ -1,6 +1,16 @@
 @base_url = http://127.0.0.1:3333
 
 ###
+# Login
+POST {{base_url}}/login
+content-type: application/json
+
+{
+    "username": "apirat",
+    "password":"123456789"
+}
+
+###
 # Register
 POST {{base_url}}/register
 content-type: application/json
