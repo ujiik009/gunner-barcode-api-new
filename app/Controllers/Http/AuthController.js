@@ -26,6 +26,7 @@ class AuthController {
                     .attempt(username, password)
                 delete user.password
                 return {
+                    status:true,
                     ...token,
                     user
                 }
