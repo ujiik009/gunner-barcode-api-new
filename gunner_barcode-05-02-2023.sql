@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 07:01 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Host: db:3306
+-- Generation Time: Feb 05, 2023 at 04:40 PM
+-- Server version: 5.7.41
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `adonis_schema` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `batch` int(11) DEFAULT NULL,
-  `migration_time` timestamp NOT NULL DEFAULT current_timestamp()
+  `migration_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -39,8 +39,10 @@ CREATE TABLE `adonis_schema` (
 --
 
 INSERT INTO `adonis_schema` (`id`, `name`, `batch`, `migration_time`) VALUES
-(1, '1672758758002_product_order_schema', 1, '2023-01-03 15:33:18'),
-(2, '1672758871706_product_order_detail_schema', 1, '2023-01-03 15:33:18');
+(7, '1503248427885_user', 1, '2023-02-05 15:44:35'),
+(8, '1503248427886_token', 1, '2023-02-05 15:44:35'),
+(9, '1672758758002_product_order_schema', 1, '2023-02-05 15:44:35'),
+(10, '1672758871706_product_order_detail_schema', 1, '2023-02-05 15:44:35');
 
 -- --------------------------------------------------------
 
@@ -56,9 +58,9 @@ CREATE TABLE `claim_products` (
   `brand` varchar(255) DEFAULT NULL,
   `buy_date` varchar(255) DEFAULT NULL,
   `warranty_date` varchar(255) DEFAULT NULL,
-  `topic_issue` text DEFAULT NULL,
-  `content_issue` text DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `topic_issue` text,
+  `content_issue` text,
+  `remark` text,
   `phone_contact` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -87,9 +89,9 @@ CREATE TABLE `products` (
   `category` text NOT NULL,
   `warranty` text NOT NULL,
   `img_link` text NOT NULL,
-  `best_seller` tinyint(1) NOT NULL DEFAULT 0,
-  `price` float NOT NULL DEFAULT 500,
-  `discount` float NOT NULL DEFAULT 0
+  `best_seller` tinyint(1) NOT NULL DEFAULT '0',
+  `price` float NOT NULL DEFAULT '500',
+  `discount` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -152,21 +154,11 @@ INSERT INTO `products` (`id`, `product_name`, `brand`, `model`, `detail`, `categ
 
 CREATE TABLE `product_orders` (
   `id` char(36) NOT NULL,
-  `delivery_address` text DEFAULT NULL,
+  `delivery_address` text,
   `user_id` char(36) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `product_orders`
---
-
-INSERT INTO `product_orders` (`id`, `delivery_address`, `user_id`, `created_at`, `updated_at`) VALUES
-('791294ae-9ce5-4c04-aa39-fd0887bbe08a', NULL, 'a7ce4fa7-8b7a-11ed-9a94-b42e99eb5887', '2023-01-03 23:17:17', '2023-01-03 23:17:17'),
-('a4860735-ce4e-4ee4-83de-fbca857c7680', NULL, 'a7ce4fa7-8b7a-11ed-9a94-b42e99eb5887', '2023-01-03 23:15:03', '2023-01-03 23:15:03'),
-('b60f3934-121f-4821-8145-e85713d5b1f3', NULL, 'a7ce4fa7-8b7a-11ed-9a94-b42e99eb5887', '2023-01-03 23:16:58', '2023-01-03 23:16:58'),
-('e8a9f97f-8002-4810-afb8-f1b14c5fd442', NULL, 'a7ce4fa7-8b7a-11ed-9a94-b42e99eb5887', '2023-01-03 23:15:28', '2023-01-03 23:15:28');
 
 -- --------------------------------------------------------
 
@@ -183,23 +175,6 @@ CREATE TABLE `product_order_details` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `product_order_details`
---
-
-INSERT INTO `product_order_details` (`id`, `product_id`, `product_order_id`, `qty`, `created_at`, `updated_at`) VALUES
-('1c8e1330-06ef-42d8-8c57-2b0aa1961682', '0bd6c294-ccd0-4844-b79b-3838d3bac126', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:17:17', '2023-01-03 23:17:17'),
-('1e3b24ea-1dd9-42f2-975d-eba2cc1ea308', '292f1c88-c6b2-4ca4-8521-b6ade20b20c9', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:15:03', '2023-01-03 23:15:03'),
-('5a496864-4927-4707-87d9-a33ff7165566', '0bd6c294-ccd0-4844-b79b-3838d3bac126', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:16:58', '2023-01-03 23:16:58'),
-('5cfed4d4-97f2-424e-b399-a853762802e4', '0bd6c294-ccd0-4844-b79b-3838d3bac126', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:15:28', '2023-01-03 23:15:28'),
-('86041b15-43ab-4455-9159-f071be260667', '34cd86e0-4610-4bb1-83c8-864fca8566e3', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 4, '2023-01-03 23:17:17', '2023-01-03 23:17:17'),
-('b43863ed-488a-4f65-adb5-306966974a28', '292f1c88-c6b2-4ca4-8521-b6ade20b20c9', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:16:58', '2023-01-03 23:16:58'),
-('c0dad420-c59a-4a83-950d-cbe0cdcccc1e', '292f1c88-c6b2-4ca4-8521-b6ade20b20c9', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:17:17', '2023-01-03 23:17:17'),
-('c587994b-e1d2-4aad-b506-9ba86e9d4c4a', '292f1c88-c6b2-4ca4-8521-b6ade20b20c9', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:15:28', '2023-01-03 23:15:28'),
-('caac3784-bc53-420e-bee0-1dd95346d236', '0bd6c294-ccd0-4844-b79b-3838d3bac126', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:15:03', '2023-01-03 23:15:03'),
-('dcc014f8-ae02-4c6c-a49a-e88d30552d92', '34cd86e0-4610-4bb1-83c8-864fca8566e3', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:16:58', '2023-01-03 23:16:58'),
-('e8f621ea-a074-4fad-a252-8e148a60b28b', '34cd86e0-4610-4bb1-83c8-864fca8566e3', 'a4860735-ce4e-4ee4-83de-fbca857c7680', 1, '2023-01-03 23:15:28', '2023-01-03 23:15:28');
-
 -- --------------------------------------------------------
 
 --
@@ -211,9 +186,9 @@ CREATE TABLE `promotions` (
   `name` varchar(256) NOT NULL,
   `detail` text NOT NULL,
   `images` text NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `price` float NOT NULL DEFAULT 0,
-  `discount` float NOT NULL DEFAULT 0
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `price` float NOT NULL DEFAULT '0',
+  `discount` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -237,8 +212,8 @@ CREATE TABLE `sticker_designs` (
   `sticker_size` varchar(255) DEFAULT NULL,
   `sticker_texture` varchar(255) DEFAULT NULL,
   `sticker_type` varchar(255) DEFAULT NULL,
-  `sticker_base64` text DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT 1,
+  `sticker_base64` text,
+  `is_active` tinyint(1) DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -255,14 +230,54 @@ INSERT INTO `sticker_designs` (`id`, `color`, `qty`, `sticker_size`, `sticker_te
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` char(36) DEFAULT NULL,
+  `token` varchar(255) NOT NULL,
+  `type` varchar(80) NOT NULL,
+  `is_revoked` tinyint(1) DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tokens`
+--
+
+INSERT INTO `tokens` (`id`, `user_id`, `token`, `type`, `is_revoked`, `created_at`, `updated_at`) VALUES
+(1, '6c6c9bd6-e012-46d8-a267-f192c79b1561', 'd9151558-0582-4b56-9853-daf00b880891', 'jwt_refresh_token', 0, '2023-02-05 15:44:57', '2023-02-05 15:44:57'),
+(2, '6c6c9bd6-e012-46d8-a267-f192c79b1561', 'da265b66-b3ba-4772-8350-e038dd212b52', 'jwt_refresh_token', 0, '2023-02-05 15:46:28', '2023-02-05 15:46:28'),
+(3, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '13ec9abf-9d08-4459-a395-4ad05df5fbb5', 'jwt_refresh_token', 0, '2023-02-05 15:47:28', '2023-02-05 15:47:28'),
+(4, '6c6c9bd6-e012-46d8-a267-f192c79b1561', 'a93db6e1-458f-4a92-90b6-c4745d9c5528', 'jwt_refresh_token', 0, '2023-02-05 15:51:15', '2023-02-05 15:51:15'),
+(5, '6c6c9bd6-e012-46d8-a267-f192c79b1561', 'e15b25f5-1b82-4165-8069-6d8f6aa72df5', 'jwt_refresh_token', 0, '2023-02-05 15:53:04', '2023-02-05 15:53:04'),
+(6, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '68c98409-3ae0-4086-9d12-92f545b6f432', 'jwt_refresh_token', 0, '2023-02-05 15:58:47', '2023-02-05 15:58:47'),
+(7, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '43e1f853-37c9-4ab3-9c25-aaefb9943036', 'jwt_refresh_token', 0, '2023-02-05 15:59:00', '2023-02-05 15:59:00'),
+(8, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '54cb1837-867f-4eb0-934e-cfb378f5b40c', 'jwt_refresh_token', 0, '2023-02-05 15:59:36', '2023-02-05 15:59:36'),
+(9, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '5ff39d26-beb7-49c5-8df3-240bf8288b8a', 'jwt_refresh_token', 0, '2023-02-05 16:00:09', '2023-02-05 16:00:09'),
+(10, '6c6c9bd6-e012-46d8-a267-f192c79b1561', 'd92dc7a5-cef4-41e6-806b-a6811bf56143', 'jwt_refresh_token', 0, '2023-02-05 16:02:38', '2023-02-05 16:02:38'),
+(11, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '51d4c90b-2aef-4478-a3f9-a303e991eafa', 'jwt_refresh_token', 0, '2023-02-05 16:29:08', '2023-02-05 16:29:08'),
+(12, '6c6c9bd6-e012-46d8-a267-f192c79b1561', 'baa2d3d9-6410-4a4b-9bd7-55951a33cddf', 'jwt_refresh_token', 0, '2023-02-05 16:30:27', '2023-02-05 16:30:27'),
+(13, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '69956714-a8fd-41c3-a81d-dbbbe8a6d79f', 'jwt_refresh_token', 0, '2023-02-05 16:31:04', '2023-02-05 16:31:04'),
+(14, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '180fe57f-20a5-4a77-a901-b8e772977f1a', 'jwt_refresh_token', 0, '2023-02-05 16:37:40', '2023-02-05 16:37:40'),
+(15, '6c6c9bd6-e012-46d8-a267-f192c79b1561', '43ef0044-b580-49bb-9a22-c1a7bb4c300f', 'jwt_refresh_token', 0, '2023-02-05 16:38:56', '2023-02-05 16:38:56'),
+(16, '6c6c9bd6-e012-46d8-a267-f192c79b1561', 'd8b93136-9ee6-4c97-beb5-2da207ff1207', 'jwt_refresh_token', 0, '2023-02-05 16:39:13', '2023-02-05 16:39:13');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` char(36) NOT NULL,
   `username` varchar(80) NOT NULL,
+  `fullname` varchar(100) NOT NULL,
   `email` varchar(254) NOT NULL,
   `password` varchar(60) NOT NULL,
+  `role` varchar(60) NOT NULL DEFAULT 'USER',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -271,8 +286,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `updated_at`) VALUES
-('a7ce4fa7-8b7a-11ed-9a94-b42e99eb5887', 'ikool009', 'ice@hotmail.com', '0289004070010', '2023-01-03 22:23:19', '2023-01-18 22:23:19');
+INSERT INTO `users` (`id`, `username`, `fullname`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
+('6c6c9bd6-e012-46d8-a267-f192c79b1561', 'apirat', 'apirat noiaroon', 'apirat14121ice@hotmail.com', '$2a$10$/TK.p6XpOeqQWhGgRCVxAO.Bcw8IO6pvzZtpDb1s4xyEDVs/dfDJG', 'ADMIN', '2023-02-05 15:44:54', '2023-02-05 15:44:54');
 
 --
 -- Indexes for dumped tables
@@ -324,6 +339,15 @@ ALTER TABLE `sticker_designs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tokens_token_unique` (`token`),
+  ADD KEY `tokens_user_id_foreign` (`user_id`),
+  ADD KEY `tokens_token_index` (`token`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -339,7 +363,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adonis_schema`
 --
 ALTER TABLE `adonis_schema`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
@@ -357,6 +387,12 @@ ALTER TABLE `product_orders`
 ALTER TABLE `product_order_details`
   ADD CONSTRAINT `product_order_details_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `product_order_details_product_order_id_foreign` FOREIGN KEY (`product_order_id`) REFERENCES `product_orders` (`id`);
+
+--
+-- Constraints for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD CONSTRAINT `tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
