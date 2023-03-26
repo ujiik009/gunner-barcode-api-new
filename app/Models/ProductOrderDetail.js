@@ -7,6 +7,10 @@ class ProductOrderDetail extends Model {
     order(){
         return this.belongsTo("App/Models/ProductOrder")
     }
+
+    product(){
+        return this.belongsTo("App/Models/Product")
+    }
 }
 
 module.exports = ProductOrderDetail

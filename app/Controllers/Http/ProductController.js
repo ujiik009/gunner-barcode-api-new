@@ -18,6 +18,7 @@ class ProductController {
    * @param {View} ctx.view
    */
   async index({ params: { page, limit }, response, view }) {
+    
     response.json({
       status: true,
       data: await Product.query().paginate(page, limit)
@@ -101,6 +102,50 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response }) {
+    const { id } = params;
+    const {
+      product_name,
+      brand,
+      model,
+      detail,
+      category,
+      warranty,
+      img_link,
+      best_seller,
+      price,
+      discount
+    } = request.only([
+      "product_name",
+      "brand",
+      "model",
+      "detail",
+      "category",
+      "warranty",
+      "img_link",
+      "best_seller",
+      "price",
+      "discount"
+    ]);
+
+    const product = await Product.find(id);
+    if (!product) {
+      return { error: "Product not found" };
+    }
+
+    product.product_name = product_name ?? product.product_name;
+    product.brand = brand ?? product.brand;
+    product.model = model ?? product.model;
+    product.detail = detail ?? product.detail;
+    product.category = category ?? product.category;
+    product.warranty = warranty ?? product.warranty;
+    product.img_link = img_link ?? product.img_link;
+    product.best_seller = best_seller ?? product.best_seller;
+    product.price = price ?? product.price;
+    product.discount = discount ?? product.discount;
+
+    await product.save();
+
+    return { message: "Product updated successfully", product };
   }
 
   /**

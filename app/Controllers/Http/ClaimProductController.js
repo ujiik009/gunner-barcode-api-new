@@ -20,7 +20,11 @@ class ClaimProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
+  async index({ params: { page, limit }, request, response, view }) {
+    response.json({
+      status: true,
+      data: await ClaimProduct.query().paginate(page, limit)
+    })
   }
 
   /**

@@ -11,6 +11,18 @@ const uuid = use("uuid")
  */
 class ProductOrderController {
 
+  async index({ params: { page, limit }, response }) {
+
+    response.json({
+      status: true,
+      data: await ProductOrder
+        .query()
+        .with('orderDetail.product')
+        .with('user')
+        .paginate(page, limit)
+    })
+
+  }
 
   /**
    * Create/save a new productorder.
@@ -35,7 +47,7 @@ class ProductOrderController {
       console.log(error);
       throw error
     }
-   
+
   }
 }
 
