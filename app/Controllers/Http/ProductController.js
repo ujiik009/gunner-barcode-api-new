@@ -35,7 +35,9 @@ class ProductController {
   * @param {View} ctx.view
   */
   async get_product_by_brand({ request, response }) {
+    console.log("get_product_by_brand working");
     const { brand } = request.only(["brand"])
+    console.log(brand);
     response.json({
       status: true,
       data: await Product.query().where("brand", "=", brand).fetch()

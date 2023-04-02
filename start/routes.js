@@ -28,7 +28,7 @@ Route.get("/products/:id", "ProductController.show")
 
 Route.post("/products/:id", "ProductController.update")
 
-Route.post("/products/brand", "ProductController.get_product_by_brand")
+Route.post("/get/products/brand", "ProductController.get_product_by_brand")
 Route.post("/best_seller", "ProductController.best_seller")
 Route.get("/promotions", "PromotionController.index")
 Route.get("/categories", "ProductController.categories")
