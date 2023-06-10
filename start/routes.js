@@ -37,3 +37,8 @@ Route.get("/claim/product/:page/:limit", "ClaimProductController.index")
 Route.post("/claim/product", "ClaimProductController.store")
 Route.post("/order/product", "ProductOrderController.store")
 Route.get("/order/product/:page/:limit", "ProductOrderController.index")
+
+
+Route.get("/vdos","VdoController.index")
+Route.put("/vdos","VdoController.store")
+Route.delete("/vdos/:id","VdoController.destroy")

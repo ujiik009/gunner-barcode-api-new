@@ -1,0 +1,12 @@
+@base_url = http://127.0.0.1:3333
+
+###
+# submit sticker design
+PUT {{base_url}}/vdos
+content-type: application/json
+
+{
+    "url": "https://www.youtube.com/watch?v=twPfxOVczUs"
+}
+
+
