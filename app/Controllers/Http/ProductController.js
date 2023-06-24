@@ -3,6 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+const uuid = use("uuid")
 const Product = use("App/Models/Product")
 /**
  * Resourceful controller for interacting with products
@@ -21,7 +22,7 @@ class ProductController {
     
     response.json({
       status: true,
-      data: await Product.query().paginate(page, limit)
+      data: await Product.query().orderBy("created_at", "desc").paginate(page, limit)
     })
   }
 
@@ -65,6 +66,46 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
+    const {
+      product_name,
+      brand,
+      model,
+      detail,
+      category,
+      warranty,
+      img_link,
+      best_seller,
+      price,
+      discount
+    } = request.only([
+      "product_name",
+      "brand",
+      "model",
+      "detail",
+      "category",
+      "warranty",
+      "img_link",
+      "best_seller",
+      "price",
+      "discount"
+    ]);
+
+    const product = new Product()
+    product.id = uuid.v4()
+    product.product_name = product_name 
+    product.brand = brand
+    product.model = model
+    product.detail = detail
+    product.category = category
+    product.warranty = warranty
+    product.img_link = img_link
+    product.best_seller = best_seller
+    product.price = price
+    product.discount = discount
+
+    await product.save();
+
+    return {status:true ,message: "Product created successfully", product };
   }
 
   /**
@@ -159,6 +200,20 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {
+    const {id} = params;
+    const product = await Product.find(id);
+    if(product){
+      await product.delete()
+      return {
+        status:true,
+        message: "Product deleted successfully"
+      }
+    }else{
+      return {
+        status:false,
+        message:"Product not found"
+      }
+    }
   }
 
   /**

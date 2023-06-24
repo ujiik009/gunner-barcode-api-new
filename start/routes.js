@@ -27,6 +27,8 @@ Route.get("/products/:page/:limit", "ProductController.index")
 Route.get("/products/:id", "ProductController.show")
 
 Route.post("/products/:id", "ProductController.update")
+Route.put("/products", "ProductController.store")
+Route.delete("/products/:id", "ProductController.destroy")
 
 Route.post("/get/products/brand", "ProductController.get_product_by_brand")
 Route.post("/best_seller", "ProductController.best_seller")
